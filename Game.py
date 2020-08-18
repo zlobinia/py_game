@@ -1,10 +1,11 @@
 import sys
 
 import pygame
+from pygame.sprite import Group
+
+from Bullet import Bullet, BulletSettings
 from settings import GameSettings
 from unit import Unit
-from Bullet import Bullet, BulletSettings
-from pygame.sprite import Group
 
 
 def run_game():
@@ -20,9 +21,19 @@ def run_game():
         # Watch for keyboard and mouse events.
         checkEvents(unit, screen, bullets)
         unit.update()
-        bullets.update()
+        update_bullets(bullets)
         # Make the most recently drawn screen visible.\
         updateScreen(screen, settings, unit, bullets)
+
+
+def update_bullets(bullets):
+    for bullet in bullets.copy():
+        if (bullet.rect.bottom <= 0):
+            bullets.remove(bullet)
+        elif bullet.range <= 0:
+            bullets.remove(bullet)
+
+    bullets.update()
 
 
 def checkEvents(unit, screen, bullets):

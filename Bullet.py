@@ -9,6 +9,7 @@ class BulletSettings():
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = 0, 255, 0
+        self.range = 150
 
 
 class Bullet(Sprite):
@@ -25,10 +26,12 @@ class Bullet(Sprite):
 
         self.color = b_settings.bullet_color
         self.speed = b_settings.speed
+        self.range = b_settings.range
 
     def update(self):
         self.y -= self.speed
         self.rect.y = self.y
+        self.range -= self.speed
 
     def draw_bullet(self):
         pygame.draw.rect(self.screen, self.color, self.rect)
